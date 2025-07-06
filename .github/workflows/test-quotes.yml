@@ -1,0 +1,33 @@
+name: Test Double Quotes Rule
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-correct:
+    runs-on: ubuntu-latest
+    env:
+      BRANCH: "main"
+      NODE_VERSION: "18"
+      DEPLOY_ENV: "production"
+      ENABLE_FEATURE: "true"
+    steps:
+      - name: Test correct usage
+        run: |
+          echo "✅ 正しいダブルクォーテーション使用例"
+          echo "Branch: ${{ env.BRANCH }}"
+          echo "Node version: ${{ env.NODE_VERSION }}"
+          echo "Deploy environment: ${{ env.DEPLOY_ENV }}"
+          echo "Feature enabled: ${{ env.ENABLE_FEATURE }}"
+
+  test-incorrect:
+    runs-on: ubuntu-latest
+    env:
+      BRANCH: main  # これはlintエラーになるはず
+      NODE_VERSION: '18'  # これもlintエラーになるはず
+    steps:
+      - name: Test incorrect usage
+        run: |
+          echo "❌ 間違った使用例（lintエラーになるはず）"
+          echo "Branch: ${{ env.BRANCH }}"
+          echo "Node version: ${{ env.NODE_VERSION }}"

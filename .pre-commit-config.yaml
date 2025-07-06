@@ -1,0 +1,17 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+
+  - repo: local
+    hooks:
+      - id: github-actions-env-check
+        name: GitHub Actions Environment Variable Check
+        entry: bash -c 'if grep -r "env\." .github/workflows/; then echo "❌ 環境変数の直接参照が検出されました"; echo "代わりに、環境変数を明示的に定義するか、secretsを使用してください"; exit 1; fi'
+        language: system
+        files: \.github/workflows/.*\.ya?ml$
+        pass_filenames: false
